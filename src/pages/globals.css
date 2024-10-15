@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --background: #ffffff;
+    --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
+}
+
+body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+}
+
+@keyframes feather-flutter {
+    0% {
+        opacity: 0;
+        transform: translateY(-500px) rotate(0deg);
+    }
+    10% {
+        opacity: 0.3;
+        transform: translateY(-450px) rotate(-5deg);
+    }
+    20% {
+        opacity: 0.6;
+        transform: translateY(-400px) rotate(5deg);
+    }
+    30% {
+        opacity: 0.9;
+        transform: translateY(-350px) rotate(-3deg);
+    }
+    40% {
+        opacity: 1;
+        transform: translateY(-300px) rotate(3deg);
+    }
+    50% {
+        transform: translateY(-250px) rotate(-2deg);
+    }
+    60% {
+        transform: translateY(-200px) rotate(2deg);
+    }
+    70% {
+        transform: translateY(-150px) rotate(-1deg);
+    }
+    80% {
+        transform: translateY(-100px) rotate(1deg);
+    }
+    90% {
+        transform: translateY(-50px) rotate(0deg);
+    }
+    /*95% {*/
+    /*  transform: translateX(50px) rotate(0deg);*/
+    /*}*/
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+.animate-feather-flutter {
+    animation: feather-flutter 10s ease forwards; /* Increased duration for slower effect */
+}
