@@ -73,3 +73,17 @@ body {
 .animate-feather-flutter {
     animation: feather-flutter 10s ease forwards; /* Increased duration for slower effect */
 }
+
+.sleigh {
+    border-radius: 25%;
+    margin-right: 5rem;
+    height: 3rem;
+}
+
+.editable-content {
+    display: inline-block;  /* Allow it to fit content width */
+    min-height: 40px;      /* Minimum height for the div */
+    padding: 8px;          /* Padding for better spacing */
+    resize: none;          /* Disable manual resizing */
+    overflow-wrap: break-word; /* Allow long words to break */
+}

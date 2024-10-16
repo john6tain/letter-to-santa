@@ -15,6 +15,9 @@ const config: Config = {
 			xl: '1440px',
 		},
 		extend: {
+			margin: {
+				'm2rem': '2rem', // Custom left margin
+			},
 			colors: {
 				background: "var(--background)",
 				foreground: "var(--foreground)",
