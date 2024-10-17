@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 
 async function verifyUser(username: string, password: string) {
 	const db = await openDb();
-	const sql = 'SELECT password FROM users where username = ?';
+	const sql = 'SELECT * FROM users where username = ?';
 	const result = await db.get(sql, [username]);
 	await db.close();
 	return result && await bcrypt.compare(password, result.password) && result || false;

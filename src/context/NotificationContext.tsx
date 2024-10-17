@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, {createContext, useContext, useState} from "react";
 
 interface Notification {
 	message: string;
@@ -14,19 +14,19 @@ interface NotificationContextType {
 
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
 
-export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const [toaster, setToaster] = useState<Notification>({ message: '', type: '', visible: false });
+export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
+	const [toaster, setToaster] = useState<Notification>({message: '', type: '', visible: false});
 
 	const notify = (message: string, type: string) => {
-		setToaster({ message, type, visible: true });
+		setToaster({message, type, visible: true});
 	};
 
 	const closeToaster = () => {
-		setToaster(prev => ({ ...prev, visible: false }));
+		setToaster(prev => ({...prev, visible: false}));
 	};
 
 	return (
-		<NotificationContext.Provider value={{ notify, toaster, closeToaster }}>
+		<NotificationContext.Provider value={{notify, toaster, closeToaster}}>
 			{children}
 		</NotificationContext.Provider>
 	);

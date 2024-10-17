@@ -7,7 +7,7 @@ interface ToasterProps {
 	onClose: () => void;
 }
 
-const Toaster: React.FC<ToasterProps> = ({ message, type, visible, onClose }) => {
+const Toaster: React.FC<ToasterProps> = ({message, type, visible, onClose}) => {
 	useEffect(() => {
 		if (visible) {
 			const timer = setTimeout(onClose, 3000);

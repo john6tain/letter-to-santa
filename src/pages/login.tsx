@@ -1,13 +1,12 @@
 import React, {useState} from "react";
 import {useNotification} from "@/context/NotificationContext";
-import AuthService from "@/services/authService";
 import {useAuth} from "@/context/AuthContext";
 
-export default function Login({clickRegister}) {
+export default function Login(clickRegister: any) {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
-	const { notify } = useNotification();
-	const { login } = useAuth();
+	const {notify} = useNotification();
+	const {login} = useAuth();
 
 	async function loginFetch() {
 		const response = await fetch('/api/login', {
@@ -21,7 +20,7 @@ export default function Login({clickRegister}) {
 		if (response.ok) {
 			const data = await response.json();
 			login(data.token);
-			notify(data.message,  'success');
+			notify(data.message, 'success');
 		} else {
 			const errorData = await response.json();
 			console.error('Login error:', errorData.message);
@@ -53,8 +52,8 @@ export default function Login({clickRegister}) {
 							onClick={() => loginFetch()}>Вписване
 			</button>
 			<button type="button"
-					className="mt-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-					onClick={() => clickRegister()}>Регистрация
+							className="mt-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+							onClick={() => clickRegister()}>Регистрация
 			</button>
 		</div>
 	)

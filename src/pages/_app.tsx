@@ -7,15 +7,15 @@ import {AuthProvider} from "@/context/AuthContext";
 
 
 function MyApp({Component, pageProps}: AppProps) {
-    return (
-        <NotificationProvider>
-            <AuthProvider>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
-            </AuthProvider>
-        </NotificationProvider>
-    );
+	return (
+		<NotificationProvider>
+			<AuthProvider>
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
+			</AuthProvider>
+		</NotificationProvider>
+	);
 }
 
 export default MyApp;
