@@ -23,10 +23,11 @@ async function init() {
     CREATE TABLE IF NOT EXISTS wishes (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       userId INTEGER NOT NULL,
-      title TEXT NOT NULL UNIQUE,
+      title TEXT NOT NULL,
       description TEXT,
       link TEXT,
       FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
+      UNIQUE(userId, title)
     );
 `);
 
