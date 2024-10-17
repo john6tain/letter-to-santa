@@ -2,10 +2,16 @@ import Card from "@/components/card";
 import {useEffect, useState} from "react";
 import BackendService from "@/services/backendService";
 import {useNotification} from "@/context/NotificationContext";
-import {createWebpackAliases} from "next/dist/build/create-compiler-aliases";
+
+interface CardProps {
+    id: number;
+    title: string;
+    description: string;
+    link: string;
+}
 
 export default function MyWishes() {
-    const defaultCard = {
+    const defaultCard: CardProps = {
         id: 0,
         title: 'Напиши име на подаръка',
         description: 'Дай малко подробности за подаръка',
@@ -13,7 +19,7 @@ export default function MyWishes() {
     };
 
     const {notify} = useNotification();
-    const [cardData, setCardData] = useState([]);
+    const [cardData, setCardData] = useState<CardProps[]>([]);
     const [isReady, setIsReady] = useState(false);
 
     async function getWishes() {
@@ -39,7 +45,7 @@ export default function MyWishes() {
             .catch(error => notify(error.message, 'error'));
     }
 
-    async function deleteWishes(id) {
+    async function deleteWishes(id: number) {
         BackendService.delete(`/api/wishes/delete/${id}`)
             .then(response => response.json())
             .then(wishes => {
@@ -55,7 +61,7 @@ export default function MyWishes() {
         setCardData([...cardData]);
     }
 
-    function removeCard(index) {
+    function removeCard(index: number) {
         if (cardData[index] && confirm("Сигурен ли си, че искаш да изтриеш това желание")) {
             const id = cardData[index].id;
             setIsReady(false);
@@ -64,7 +70,7 @@ export default function MyWishes() {
     }
 
     function handleChange(index: number, newTitle: string, newDescription: string, newLink: string) {
-        let updatedCards = [...cardData];
+        let updatedCards: CardProps[] = [...cardData];
         if (!updatedCards.length) {
             updatedCards = [...[defaultCard]];
         }

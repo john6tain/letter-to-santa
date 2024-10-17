@@ -4,9 +4,9 @@ interface CardProps {
     title: string;
     description: string;
     link: string;
-    handleChange: (newTitle: string, newDescription: string, newLink: string) => void;
-    addNewCard: () => void;
-    removeCard: () => void;
+    handleChange?: (newTitle: string, newDescription: string, newLink: string) => void;
+    addNewCard?: () => void;
+    removeCard?: () => void;
 }
 
 export default function Card({title, description, link, handleChange, addNewCard, removeCard}: CardProps) {
@@ -24,7 +24,9 @@ export default function Card({title, description, link, handleChange, addNewCard
                 setIsEditable(false);
                 setIsTitleEditable(false);
                 setIsLinkEditable(false);
-                handleChange(newTitle, newDescription, newLink);
+                if (handleChange) {
+                    handleChange(newTitle, newDescription, newLink);
+                }
             }
         };
 
