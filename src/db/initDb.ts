@@ -10,6 +10,7 @@ async function openDb() {
 
 async function init() {
 	const db = await openDb();
+
 	// users
 	await db.exec(`
     CREATE TABLE IF NOT EXISTS users (
@@ -18,6 +19,7 @@ async function init() {
       password TEXT NOT NULL
     );
   `);
+
   // wishes
 	await db.exec(`
     CREATE TABLE IF NOT EXISTS wishes (
@@ -30,6 +32,20 @@ async function init() {
       UNIQUE(userId, title)
     );
 `);
+
+	// selected_wishes
+	await db.exec(`
+ 		CREATE TABLE IF NOT EXISTS selected_wishes (
+ 			id INTEGER PRIMARY KEY AUTOINCREMENT,
+ 			userId INTEGER NOT NULL,
+ 			wishId INTEGER NOT NULL,
+ 			FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
+ 			FOREIGN KEY (wishId) REFERENCES wishes(id) ON DELETE CASCADE,
+ 		 	UNIQUE(userId, wishId)
+		);
+`);
+
+
 
 	console.log('Database initialized');
 	await db.close();

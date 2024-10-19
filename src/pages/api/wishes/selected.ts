@@ -3,16 +3,16 @@ import openDb from '../../../db/db';
 import {authenticate} from "@/utils/auth";
 import {getUserId} from "@/utils/jwt";
 
-async function getWishes(userId: number) {
+async function getSelectedWishes(userId: number) {
     const db = await openDb();
-    const sql = 'SELECT * FROM wishes WHERE userId = ?';
+    const sql = 'SELECT * FROM selected_wishes WHERE userId = ?';
     const result = await db.all(sql, [userId]);
     await db.close();
     // console.log(result)
     return result;
 }
 
-const getWish = async (req: NextApiRequest, res: NextApiResponse) => {
+const getSelectedWish = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const authHeader = req.headers.authorization;
     if (!authHeader) {
@@ -20,8 +20,8 @@ const getWish = async (req: NextApiRequest, res: NextApiResponse) => {
     }
     const token = authHeader.split(' ')[1];
     const userId = getUserId(token);
-    const wishes = await getWishes(userId);
+    const wishes = await getSelectedWishes(userId);
     res.status(200).json(wishes);
 };
 
-export default authenticate(getWish);
+export default authenticate(getSelectedWish);
