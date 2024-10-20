@@ -5,14 +5,15 @@ import {getUserId} from "@/utils/jwt";
 
 async function getSelectedWishes(userId: number) {
     const db = await openDb();
-    const sql = '' +
-      'SELECT wishes.*, users.username \n' +
-      'FROM wishes\n' +
-      'JOIN users ON wishes.userId = users.id\n' +
-      'WHERE wishes.id == ?';
+    const sql = `
+SELECT wishes.*, users.username 
+FROM selected_wishes
+JOIN wishes ON selected_wishes.wishId = wishes.id
+JOIN users ON wishes.userId = users.id
+WHERE selected_wishes.userId = ?;`
+
     const result = await db.all(sql, [userId]);
     await db.close();
-    // console.log(result)
     return result;
 }
 

@@ -19,7 +19,7 @@ export default function Login(clickRegister: any) {
 
 		if (response.ok) {
 			const data = await response.json();
-			login(data.token);
+			login(data);
 			notify(data.message, 'success');
 		} else {
 			const errorData = await response.json();

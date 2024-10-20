@@ -5,10 +5,11 @@ import AuthService from '../services/authService';
 interface AuthContextProps {
 	isAuthenticated: boolean;
 	loading: boolean;
-	login: (token: string) => void;
+	login: (data: { username: string, token: string }) => void;
 	logout: () => void;
 	setCurrentMenu: (token: string) => void;
 	currentMenu: string;
+	username: string;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -17,6 +18,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [currentMenu, setCurrentMenu] = useState<string>('wishes');
+	const [username, setUsername] = useState<string>('');
 
 	useEffect(() => {
 		// Check authentication status on mount
@@ -29,9 +31,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 		checkAuth();
 	}, []);
 
-	const login = (token: string) => {
-		AuthService.login(token);
-		setIsAuthenticated(true); // Update the state to reflect login
+	const login = (data: { username: string, token: string }) => {
+		AuthService.login(data.token);
+		setIsAuthenticated(true);
+		setUsername(data.username);
 	};
 
 	const logout = () => {
@@ -40,7 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 	};
 
 	return (
-		<AuthContext.Provider value={{isAuthenticated, loading, login, logout, setCurrentMenu, currentMenu}}>
+		<AuthContext.Provider value={{isAuthenticated, loading, login, logout, setCurrentMenu, currentMenu, username}}>
 			{children}
 		</AuthContext.Provider>
 	);

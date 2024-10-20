@@ -19,8 +19,7 @@ export default function AllWishes() {
 
     async function getWishes() {
         BackendService.get('/api/wishes/all')
-            .then(response => response.json())
-            .then(wishes => {
+						.then((wishes: any) => {
                 setCardData(wishes);
                 setIsReady(true);
             })

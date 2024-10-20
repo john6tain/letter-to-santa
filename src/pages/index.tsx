@@ -4,6 +4,7 @@ import Register from "@/pages/register";
 import {useAuth} from "@/context/AuthContext";
 import MyWishes from "@/pages/myWishes";
 import AllWishes from "@/pages/allWishes";
+import ToGive from "@/pages/toGive";
 
 export default function Index() {
     const [isLogin, setIsLogin] = useState(false);
@@ -45,8 +46,9 @@ export default function Index() {
             </div>
             }
             {isAuthenticated && (currentMenu === 'wishes' && <MyWishes/>) ||
-                (isAuthenticated && currentMenu === 'select-all' && <AllWishes/>) || currentMenu}
-            {/*{isAuthenticated && currentMenu === 'toGive' && <MyWishes/> || currentMenu}*/}
+              (isAuthenticated && currentMenu === 'select-all' && <AllWishes/>) ||
+              (isAuthenticated && currentMenu === 'toGive' && <ToGive/>) || currentMenu
+            }
 
         </div>
     );
