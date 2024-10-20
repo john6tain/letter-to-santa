@@ -2,6 +2,7 @@ import Card from "@/components/card";
 import {useEffect, useState} from "react";
 import BackendService from "@/services/backendService";
 import {useNotification} from "@/context/NotificationContext";
+import {useAuth} from "@/context/AuthContext";
 
 interface CardProps {
     id: number;
@@ -21,15 +22,17 @@ export default function MyWishes() {
     const {notify} = useNotification();
     const [cardData, setCardData] = useState<CardProps[]>([]);
     const [isReady, setIsReady] = useState(false);
+    const {logout} = useAuth();
 
     async function getWishes() {
-        BackendService.get('/api/wishes/get')
-            .then(response => response.json())
-            .then(wishes => {
+        BackendService.get('/api/wishes/get' ,logout)
+            .then((wishes: any) => {
                 setCardData(wishes);
                 setIsReady(true);
             })
-            .catch(error => notify(error.message, 'error'));
+            .catch(error => {
+                notify(error.message, 'error')
+            });
     }
 
     useEffect(() => {
@@ -38,7 +41,6 @@ export default function MyWishes() {
 
     async function addWishes(data: any) {
         BackendService.post('/api/wishes/add', data)
-            .then(response => response.json())
             .then(wishes => {
                 getWishes();
             })
@@ -47,7 +49,6 @@ export default function MyWishes() {
 
     async function deleteWishes(id: number) {
         BackendService.delete(`/api/wishes/delete/${id}`)
-            .then(response => response.json())
             .then(wishes => {
                 getWishes();
             })

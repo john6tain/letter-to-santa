@@ -33,7 +33,6 @@ export default function AllWishes() {
 
     function selectToGive(card : CardProps){
         BackendService.post('/api/wishes/select',{title: card.title, wishId: card.id})
-          .then(response => response.json())
           .then(wishes => {
               notify(`Ти избра да подариш\n ${card.title}\n на ${card.username}`, 'success')
           })
