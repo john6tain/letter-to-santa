@@ -2,6 +2,7 @@ import Card from "@/components/card";
 import {useCallback, useEffect, useState} from "react";
 import BackendService from "@/services/backendService";
 import {useNotification} from "@/context/NotificationContext";
+import {useAuth} from "@/context/AuthContext";
 
 interface CardProps {
 	id: number;
@@ -16,12 +17,15 @@ export default function AllWishes() {
 	const {notify} = useNotification();
 	const [cardData, setCardData] = useState<CardProps[]>([]);
 	const [isReady, setIsReady] = useState(false);
+	const {setLoading} = useAuth();
 
 	const getWishes = useCallback(async () => {
+		setLoading(true);
 		BackendService.get<CardProps[]>('/api/wishes/all')
 			.then((wishes: CardProps[]) => {
 				setCardData(wishes);
 				setIsReady(true);
+				setLoading(false);
 			})
 			.catch(error => notify(error.message, 'error'));
 	}, [notify]);

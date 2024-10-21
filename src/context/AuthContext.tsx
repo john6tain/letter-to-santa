@@ -1,16 +1,7 @@
 // src/context/AuthContext.tsx
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import AuthService from '../services/authService';
-
-interface AuthContextProps {
-	isAuthenticated: boolean;
-	loading: boolean;
-	login: (data: { username: string, token: string }) => void;
-	logout: () => void;
-	setCurrentMenu: (token: string) => void;
-	currentMenu: string;
-	username: string;
-}
+import AuthContextProps from "@/models/auth-contect-props";
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
@@ -46,7 +37,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 	};
 
 	return (
-		<AuthContext.Provider value={{isAuthenticated, loading, login, logout, setCurrentMenu, currentMenu, username}}>
+		<AuthContext.Provider value={{isAuthenticated, loading, setLoading, login, logout, setCurrentMenu, currentMenu, username}}>
 			{children}
 		</AuthContext.Provider>
 	);

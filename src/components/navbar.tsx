@@ -1,9 +1,11 @@
 import {useAuth} from "@/context/AuthContext";
 import Link from "next/link";
 import Image from "next/image";
+import Loader from "@/components/loader";
+import React from "react";
 
 export default function Navbar() {
-	const {logout, setCurrentMenu, currentMenu, username} = useAuth();
+	const {logout, setCurrentMenu, currentMenu, username, loading} = useAuth();
 	// const [activeItem, setActiveItem] = useState('wishes');
 	const setActive = (item: string) => {
 		// setActiveItem(item);
@@ -13,6 +15,7 @@ export default function Navbar() {
 	return (
 		<nav className="bg-white border-gray-200 dark:bg-gray-900">
 			<div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
+				<Loader visible={loading}/>
 				<Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
 					<Image src="/favicon.ico" className="h-8" alt="letter-to-santa-logo" width="30" height="100"/>
 					<span

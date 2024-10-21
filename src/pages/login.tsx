@@ -10,9 +10,10 @@ export default function Login({clickRegister}: LoginProps) {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const {notify} = useNotification();
-	const {login} = useAuth();
+	const {login, setLoading} = useAuth();
 
 	async function loginFetch() {
+		setLoading(true);
 		const response = await fetch('/api/login', {
 			method: 'POST',
 			headers: {
@@ -30,6 +31,7 @@ export default function Login({clickRegister}: LoginProps) {
 			console.error('Login error:', errorData.message);
 			notify(errorData.message, 'error');
 		}
+		setLoading(false);
 	}
 
 	return (

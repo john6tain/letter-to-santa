@@ -22,19 +22,21 @@ export default function MyWishes() {
 	const {notify} = useNotification();
 	const [cardData, setCardData] = useState<CardProps[]>([]);
 	const [isReady, setIsReady] = useState(false);
-	const {logout} = useAuth();
+	const {logout, setLoading} = useAuth();
 
 	const getWishes = useCallback(async () => {
-		BackendService.get<CardProps[]>('/api/wishes/get', logout)
+		setLoading(true);
+		BackendService.get<CardProps[]>('/api/wishes/get')
 			.then((wishes: CardProps[]) => {
 				setCardData(wishes);
 				setIsReady(true);
+				setLoading(false);
 			})
 			.catch(error => {
 				notify(error.message, 'error')
 			});
 
-	}, [logout, notify]);
+	}, [notify]);
 
 	useEffect(() => {
 		getWishes();
