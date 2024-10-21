@@ -24,7 +24,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 		// Check authentication status on mount
 		const checkAuth = () => {
 			const authStatus = AuthService.isAuthenticated();
+			const username = AuthService.getUsername();
 			setIsAuthenticated(authStatus);
+			setUsername(username);
 			setLoading(false);
 		};
 
@@ -33,6 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 
 	const login = (data: { username: string, token: string }) => {
 		AuthService.login(data.token);
+		AuthService.setUsername(data.username);
 		setIsAuthenticated(true);
 		setUsername(data.username);
 	};

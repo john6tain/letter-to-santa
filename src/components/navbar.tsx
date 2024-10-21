@@ -19,33 +19,34 @@ export default function Navbar() {
 						className="self-center text-black text-1xl font-semibold whitespace-nowrap dark:text-white">Писмо до дядо Коледа</span>
 				</Link>
 				<div className="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-					<a href="https://www.noradsanta.org/"> <Image src="/sleigh.png" className="sleigh" alt="sleigh"  width="100" height="100"/></a>
+					<a href="https://www.noradsanta.org/"> <Image src="/sleigh.png" className="sleigh" alt="sleigh"
+					                                              width="100" height="100"/></a>
 
 					<a href="#"
-						 className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-						 onClick={() => logout()}> Излизане <b>({username})</b></a>
+					   className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+					   onClick={() => logout()}> Излизане <b>({username})</b></a>
 				</div>
 
 				<div id="mega-menu" className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
 					<ul className="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
 						<li>
 							<a href="#" onClick={() => setActive('dinner')}
-								 className={`block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 ${currentMenu === 'dinner' ? 'font-semibold whitespace-nowrap' : ''}`}>Моите
+							   className={`block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 ${currentMenu === 'dinner' ? 'font-semibold whitespace-nowrap' : ''}`}>Моите
 								идеи за вечеря</a>
 						</li>
 						<li>
 							<a href="#" onClick={() => setActive('wishes')}
-								 className={`block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 ${currentMenu === 'wishes' ? 'font-semibold whitespace-nowrap' : ''}`}>Моите
+							   className={`block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 ${currentMenu === 'wishes' ? 'font-semibold whitespace-nowrap' : ''}`}>Моите
 								желания</a>
 						</li>
 						<li>
 							<a href="#" onClick={() => setActive('select-all')}
-								 className={`block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 ${currentMenu === 'select-all' ? 'font-semibold whitespace-nowrap' : ''}`}>Подари
+							   className={`block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 ${currentMenu === 'select-all' ? 'font-semibold whitespace-nowrap' : ''}`}>Подари
 								подаръци</a>
 						</li>
 						<li>
 							<a href="#" onClick={() => setActive('toGive')}
-								 className={`block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 ${currentMenu === 'toGive' ? 'font-semibold whitespace-nowrap' : ''}`}>Избрани
+							   className={`block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 ${currentMenu === 'toGive' ? 'font-semibold whitespace-nowrap' : ''}`}>Избрани
 								подаръци</a>
 						</li>
 					</ul>

@@ -25,8 +25,6 @@ async function checkIfUserExists(username: string) {
 	return user !== null;
 }
 
-
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === 'POST') {
 		const {username, password} = req.body;

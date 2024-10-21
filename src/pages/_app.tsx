@@ -5,7 +5,6 @@ import './globals.css';
 import {NotificationProvider} from '@/context/NotificationContext';
 import {AuthProvider} from "@/context/AuthContext";
 
-
 function MyApp({Component, pageProps}: AppProps) {
 	return (
 		<NotificationProvider>

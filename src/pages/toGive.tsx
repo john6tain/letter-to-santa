@@ -9,7 +9,7 @@ interface CardProps {
 	description: string;
 	link: string;
 	username?: string;
-	onClick?: ()=> void;
+	onClick?: () => void;
 }
 
 export default function ToGive() {
@@ -27,16 +27,15 @@ export default function ToGive() {
 
 	}, [notify]);
 
-
 	useEffect(() => {
 		getSelectedWishes();
-	},[getSelectedWishes]);
-
+	}, [getSelectedWishes]);
 
 	return (
 		<div className="flex flex-wrap overflow-x-auto">
 			{isReady && cardData.map((card, index) => (
-				<Card key={index} title={card.title} description={card.description} link={card.link} username={card.username}/>
+				<Card key={index} title={card.title} description={card.description} link={card.link}
+				      username={card.username}/>
 			))}
 		</div>
 	)
