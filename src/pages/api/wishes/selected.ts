@@ -20,7 +20,13 @@ async function getSelectedWishes(userId: number) {
     });
 
     await db.$disconnect(); // Disconnect from the database
-    return selectedWishes;
+    return selectedWishes.map((selectedWish) => ({
+        id: selectedWish.wish.id,
+        title: selectedWish.wish.title,
+        description: selectedWish.wish.description,
+        link: selectedWish.wish.link,
+        username: selectedWish.wish.user.username,
+    }));
 }
 
 const getSelectedWish = async (req: NextApiRequest, res: NextApiResponse) => {
