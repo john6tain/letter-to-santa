@@ -1,0 +1,10 @@
+### GET request to example server
+POST https://wish-to-santa.vercel.app/api/login
+Content-Type: application/json
+
+{
+    "username": "123",
+    "password": "123"
+}
+
+###

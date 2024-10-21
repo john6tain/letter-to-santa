@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "initDB": "npx tsx src/db/initDb.ts"
+    "postinstall":"npx prisma generate"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"
