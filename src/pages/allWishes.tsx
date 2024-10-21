@@ -28,7 +28,7 @@ export default function AllWishes() {
 				setLoading(false);
 			})
 			.catch(error => notify(error.message, 'error'));
-	}, [notify]);
+	}, [setLoading, notify]);
 
 	useEffect(() => {
 		getWishes();

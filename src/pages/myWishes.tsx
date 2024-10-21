@@ -22,7 +22,7 @@ export default function MyWishes() {
 	const {notify} = useNotification();
 	const [cardData, setCardData] = useState<CardProps[]>([]);
 	const [isReady, setIsReady] = useState(false);
-	const {logout, setLoading} = useAuth();
+	const {setLoading} = useAuth();
 
 	const getWishes = useCallback(async () => {
 		setLoading(true);
@@ -36,7 +36,7 @@ export default function MyWishes() {
 				notify(error.message, 'error')
 			});
 
-	}, [notify]);
+	}, [setLoading, notify]);
 
 	useEffect(() => {
 		getWishes();

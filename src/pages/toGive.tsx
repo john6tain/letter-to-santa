@@ -29,7 +29,7 @@ export default function ToGive() {
 			})
 			.catch(error => notify(error.message, 'error'));
 
-	}, [notify]);
+	}, [setLoading, notify]);
 
 	useEffect(() => {
 		getSelectedWishes();
