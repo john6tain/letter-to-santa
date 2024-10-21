@@ -19,7 +19,7 @@ const selectWish = async (req: NextApiRequest, res: NextApiResponse) => {
             return res.status(401).json({message: 'Authorization token is missing'});
         }
         const token = authHeader.split(' ')[1];
-        const {title, wishId} = req.body;
+        const {wishId} = req.body;
         try {
             const userId = getUserId(token);
             await addSelectedWish(userId, wishId)

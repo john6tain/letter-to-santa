@@ -1,5 +1,5 @@
 export default class BackendService {
-	static async get(url: string, onUnauthorized?: () => void, headers?: { [key: string]: string }): Promise<Response> {
+	static async get<T>(url: string, onUnauthorized?: () => void, headers?: { [key: string]: string }): Promise<T> {
 		try {
 			const response = await fetch(url, {
 				method: 'GET',
@@ -18,12 +18,18 @@ export default class BackendService {
 			}
 
 			return await response.json();
-		} catch (error: any) {
-			throw new Error(error.message || 'An unknown error occurred');
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(error.message || 'An unknown error occurred');
+			} else {
+				throw new Error('An unknown error occurred');
+			}
 		}
 	}
 
-	static async post(url: string,body:any, onUnauthorized?: () => void, headers?: { [key: string]: string }): Promise<Response> {
+	static async post(url: string, body: unknown, onUnauthorized?: () => void, headers?: {
+		[key: string]: string
+	}): Promise<Response> {
 		try {
 			const response = await fetch(url, {
 				method: 'POST',
@@ -44,12 +50,18 @@ export default class BackendService {
 			}
 
 			return await response.json();
-		} catch (error: any) {
-			throw new Error(error.message || 'An unknown error occurred');
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(error.message || 'An unknown error occurred');
+			} else {
+				throw new Error('An unknown error occurred');
+			}
 		}
 	}
 
-	static async delete(url: string, onUnauthorized?: () => void, headers?: { [key: string]: string }): Promise<Response> {
+	static async delete(url: string, onUnauthorized?: () => void, headers?: {
+		[key: string]: string
+	}): Promise<Response> {
 		try {
 			const response = await fetch(url, {
 				method: 'DELETE',
@@ -69,8 +81,12 @@ export default class BackendService {
 			}
 
 			return await response.json();
-		} catch (error: any) {
-			throw new Error(error.message || 'An unknown error occurred');
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(error.message || 'An unknown error occurred');
+			} else {
+				throw new Error('An unknown error occurred');
+			}
 		}
 	}
 }

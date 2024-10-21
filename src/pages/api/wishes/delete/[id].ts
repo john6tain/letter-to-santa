@@ -3,7 +3,7 @@ import openDb from '../../../../db/db';
 import {authenticate} from "@/utils/auth";
 import {getUserId} from "@/utils/jwt";
 
-async function removeWish(userId: number, id: string | string[]) {
+async function removeWish(userId: number, id: string ) {
     const db = await openDb();
     const sql = `DELETE FROM wishes WHERE id = ? AND userId = ?`;
     const result = await db.run(sql, [id, userId]);
@@ -12,7 +12,7 @@ async function removeWish(userId: number, id: string | string[]) {
 }
 
 const remove = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { id } = req.query
+	const {id} = req.query
     if (req.method === 'DELETE') {
         const authHeader = req.headers.authorization;
         if (!authHeader) {
@@ -21,7 +21,7 @@ const remove = async (req: NextApiRequest, res: NextApiResponse) => {
         const token = authHeader.split(' ')[1];
         try {
             const userId = getUserId(token);
-            await removeWish(userId, id);
+            await removeWish(userId, id as string);
             res.status(200).json({message: 'Желание е изтрито!'});
 
         } catch (error) {

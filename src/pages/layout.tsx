@@ -7,7 +7,7 @@ import {useAuth} from "@/context/AuthContext";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({children}) => {
 	const {toaster, closeToaster} = useNotification();
-	const {isAuthenticated, loading, logout} = useAuth();
+	const {isAuthenticated} = useAuth();
 	return (
 		<div className="bg-gradient-to-r from-red-500  to-green-500 h-screen text-white">
 			<Head>

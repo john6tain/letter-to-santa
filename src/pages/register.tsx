@@ -1,7 +1,11 @@
 import React, {useState} from "react";
 import {useNotification} from "@/context/NotificationContext";
 
-export default function Register(clickLogin: any) {
+interface RegisterProps {
+	clickLogin: () => void;
+}
+
+export default function Register({ clickLogin }: RegisterProps) {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [password2, setPassword2] = useState('');

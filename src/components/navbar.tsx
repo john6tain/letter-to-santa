@@ -1,4 +1,6 @@
 import {useAuth} from "@/context/AuthContext";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Navbar() {
 	const {logout, setCurrentMenu, currentMenu, username} = useAuth();
@@ -11,13 +13,13 @@ export default function Navbar() {
 	return (
 		<nav className="bg-white border-gray-200 dark:bg-gray-900">
 			<div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
-				<a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-					<img src="/favicon.ico" className="h-8" alt="letter-to-santa-logo"/>
+				<Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+					<Image src="/favicon.ico" className="h-8" alt="letter-to-santa-logo" width="30" height="100"/>
 					<span
 						className="self-center text-black text-1xl font-semibold whitespace-nowrap dark:text-white">Писмо до дядо Коледа</span>
-				</a>
+				</Link>
 				<div className="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-					<a href="https://www.noradsanta.org/"> <img src="/sleigh.png" className="sleigh" alt="sleigh"/></a>
+					<a href="https://www.noradsanta.org/"> <Image src="/sleigh.png" className="sleigh" alt="sleigh"  width="100" height="100"/></a>
 
 					<a href="#"
 						 className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"

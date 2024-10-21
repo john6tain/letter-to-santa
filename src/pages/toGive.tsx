@@ -18,8 +18,8 @@ export default function ToGive() {
 	const [isReady, setIsReady] = useState(false);
 
 	async function getSelectedWishes() {
-		BackendService.get('/api/wishes/selected')
-			.then((wishes: any) => {
+		BackendService.get<CardProps[]>('/api/wishes/selected')
+			.then((wishes: CardProps[]) => {
 				setCardData(wishes);
 				setIsReady(true);
 			})
@@ -28,7 +28,7 @@ export default function ToGive() {
 
 	useEffect(() => {
 		getSelectedWishes();
-	}, []);
+	});
 
 
 	return (

@@ -37,7 +37,7 @@ export default function Card({title, description, link, username, handleChange, 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [newTitle, newDescription, newLink]);
+    }, [handleChange, newTitle, newDescription, newLink]);
 
     return (
         <a href="#"

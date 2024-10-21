@@ -1,5 +1,5 @@
 import Card from "@/components/card";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import BackendService from "@/services/backendService";
 import {useNotification} from "@/context/NotificationContext";
 import {useAuth} from "@/context/AuthContext";
@@ -24,24 +24,26 @@ export default function MyWishes() {
     const [isReady, setIsReady] = useState(false);
     const {logout} = useAuth();
 
-    async function getWishes() {
-        BackendService.get('/api/wishes/get' ,logout)
-            .then((wishes: any) => {
-                setCardData(wishes);
-                setIsReady(true);
-            })
-            .catch(error => {
-                notify(error.message, 'error')
-            });
-    }
+    const getWishes = useCallback(async () => {
+        BackendService.get<CardProps[]>('/api/wishes/get' ,logout)
+          .then((wishes: CardProps[]) => {
+              setCardData(wishes);
+              setIsReady(true);
+          })
+          .catch(error => {
+              notify(error.message, 'error')
+          });
+
+    }, [logout, notify]);
+
 
     useEffect(() => {
         getWishes();
-    }, []);
+    }, [getWishes]);
 
-    async function addWishes(data: any) {
+    async function addWishes(data: CardProps) {
         BackendService.post('/api/wishes/add', data)
-            .then(wishes => {
+            .then(() => {
                 getWishes();
             })
             .catch(error => notify(error.message, 'error'));
@@ -49,7 +51,7 @@ export default function MyWishes() {
 
     async function deleteWishes(id: number) {
         BackendService.delete(`/api/wishes/delete/${id}`)
-            .then(wishes => {
+            .then(() => {
                 getWishes();
             })
             .catch(error => notify(error.message, 'error'));

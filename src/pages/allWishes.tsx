@@ -1,5 +1,5 @@
 import Card from "@/components/card";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import BackendService from "@/services/backendService";
 import {useNotification} from "@/context/NotificationContext";
 
@@ -17,22 +17,23 @@ export default function AllWishes() {
     const [cardData, setCardData] = useState<CardProps[]>([]);
     const [isReady, setIsReady] = useState(false);
 
-    async function getWishes() {
-        BackendService.get('/api/wishes/all')
-						.then((wishes: any) => {
-                setCardData(wishes);
-                setIsReady(true);
-            })
-            .catch(error => notify(error.message, 'error'));
-    }
+
+    const getWishes = useCallback(async () => {
+        BackendService.get<CardProps[]>('/api/wishes/all')
+          .then((wishes: CardProps[]) => {
+              setCardData(wishes);
+              setIsReady(true);
+          })
+          .catch(error => notify(error.message, 'error'));
+    }, [ notify]);
 
     useEffect(() => {
         getWishes();
-    }, []);
+    }, [getWishes]);
 
     function selectToGive(card : CardProps){
         BackendService.post('/api/wishes/select',{title: card.title, wishId: card.id})
-          .then(wishes => {
+          .then(() => {
               notify(`Ти избра да подариш\n ${card.title}\n на ${card.username}`, 'success')
           })
           .catch(error => notify(error.message, 'error'));
