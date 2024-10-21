@@ -1,14 +1,19 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import openDb from '../../../db/db';
 import {authenticate} from "@/utils/auth";
 import {getUserId} from "@/utils/jwt";
+import openDb from "@/utils/prisma";
 
-async function addSelectedWish(userId: number, wishId: string) {
+async function addSelectedWish(userId: number, wishId: number) {
     const db = await openDb();
-    const sql = `INSERT INTO selected_wishes (userId, wishId) VALUES (?, ?);`;
-    const result = await db.run(sql, [userId, wishId]);
-    await db.close();
-    console.log(result);
+    const result = await db.selectedWish.create({
+        data: {
+            userId,
+            wishId,
+        },
+    });
+
+    await db.$disconnect();
+    // console.log(result);
     return result;
 }
 
@@ -22,7 +27,7 @@ const selectWish = async (req: NextApiRequest, res: NextApiResponse) => {
         const {wishId} = req.body;
         try {
             const userId = getUserId(token);
-            await addSelectedWish(userId, wishId)
+            await addSelectedWish(userId, wishId as number)
             res.status(200).json({message: 'Желание Избрано'});
 
         } catch (error) {

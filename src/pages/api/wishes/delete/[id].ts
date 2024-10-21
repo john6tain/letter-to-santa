@@ -1,13 +1,19 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import openDb from '../../../../db/db';
 import {authenticate} from "@/utils/auth";
 import {getUserId} from "@/utils/jwt";
+import openDb from "@/utils/prisma";
 
-async function removeWish(userId: number, id: string ) {
+async function removeWish(userId: number, id: number) {
     const db = await openDb();
-    const sql = `DELETE FROM wishes WHERE id = ? AND userId = ?`;
-    const result = await db.run(sql, [id, userId]);
-    await db.close();
+
+    const result = await db.wish.deleteMany({
+        where: {
+            id,
+            userId,
+        },
+    });
+
+    await db.$disconnect();
     return result;
 }
 
@@ -21,7 +27,7 @@ const remove = async (req: NextApiRequest, res: NextApiResponse) => {
         const token = authHeader.split(' ')[1];
         try {
             const userId = getUserId(token);
-            await removeWish(userId, id as string);
+            await removeWish(userId, Number(id) as number);
             res.status(200).json({message: 'Желание е изтрито!'});
 
         } catch (error) {

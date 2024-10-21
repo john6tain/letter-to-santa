@@ -1,15 +1,20 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import openDb from '../../../db/db';
 import {authenticate} from "@/utils/auth";
 import {getUserId} from "@/utils/jwt";
+import openDb from "@/utils/prisma";
 
 async function getWishes(userId: number) {
     const db = await openDb();
-    const sql = 'SELECT * FROM wishes WHERE userId = ?';
-    const result = await db.all(sql, [userId]);
-    await db.close();
-    // console.log(result)
-    return result;
+
+    // Use Prisma to retrieve wishes for a specific user
+    const wishes = await db.wish.findMany({
+        where: {
+            userId,
+        },
+    });
+
+    await db.$disconnect(); // Disconnect from the database
+    return wishes; // Return the list of wishes
 }
 
 const getWish = async (req: NextApiRequest, res: NextApiResponse) => {

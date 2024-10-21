@@ -1,21 +1,36 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import openDb from '../../../db/db';
 import {authenticate} from "@/utils/auth";
 import {getUserId} from "@/utils/jwt";
+import openDb from "@/utils/prisma";
 
 async function addWish(userId: number, title: string, description: string, link: string) {
     const db = await openDb();
-    const sql = `INSERT INTO wishes (userId, title, description, link)
-						VALUES (?, ?, ?, ?)
-						ON CONFLICT(userId, title) DO UPDATE 
-						SET description = excluded.description,
-    					link = excluded.link;`;
-    const result = await db.run(sql, [userId, title, description, link]);
-    await db.close();
-    console.log(result);
-    return result;
-}
 
+    // Use Prisma to upsert the wish
+    const result = await db.wish.upsert({
+        where: {
+            // Create a unique identifier based on userId and title
+            userId_title: {
+                userId,
+                title,
+            },
+        },
+        update: {
+            description, // Update the description and link if exists
+            link,
+        },
+        create: {
+            userId,
+            title,
+            description,
+            link,
+        },
+    });
+
+    await db.$disconnect(); // Disconnect from the database
+    console.log(result); // Log the result for debugging
+    return result; // Return the result of the operation
+}
 const protectedRoute = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
         const authHeader = req.headers.authorization;

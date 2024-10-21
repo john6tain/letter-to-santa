@@ -1,20 +1,26 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import openDb from '../../../db/db';
 import {authenticate} from "@/utils/auth";
 import {getUserId} from "@/utils/jwt";
+import openDb from "@/utils/prisma";
 
 async function getSelectedWishes(userId: number) {
     const db = await openDb();
-    const sql = `
-SELECT wishes.*, users.username 
-FROM selected_wishes
-JOIN wishes ON selected_wishes.wishId = wishes.id
-JOIN users ON wishes.userId = users.id
-WHERE selected_wishes.userId = ?;`
 
-    const result = await db.all(sql, [userId]);
-    await db.close();
-    return result;
+    const selectedWishes = await db.selectedWish.findMany({
+        where: {
+            userId,
+        },
+        include: {
+            wish: {
+                include: {
+                    user: true,
+                },
+            },
+        },
+    });
+
+    await db.$disconnect(); // Disconnect from the database
+    return selectedWishes;
 }
 
 const getSelectedWish = async (req: NextApiRequest, res: NextApiResponse) => {

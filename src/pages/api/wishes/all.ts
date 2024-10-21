@@ -1,21 +1,31 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import openDb from '../../../db/db';
 import {authenticate} from "@/utils/auth";
 import {getUserId} from "@/utils/jwt";
+import openDb from "@/utils/prisma";
 
 async function getWishes(userId: number) {
     const db = await openDb();
-    const sql = `
-    SELECT wishes.*, users.username
-    FROM wishes
-    JOIN users ON wishes.userId = users.id
-    LEFT JOIN selected_wishes ON wishes.id = selected_wishes.wishId AND selected_wishes.userId = ?
-    WHERE users.id != ? AND selected_wishes.wishId IS NULL;
-    `;
-    const result = await db.all(sql, [userId, userId]);
-    await db.close();
-    // console.log(result)
-    return result;
+
+    const wishes = await db.wish.findMany({
+        where: {
+            user: {
+                id: {
+                    not: userId,
+                },
+            },
+            selectedWishes: {
+                none: {
+                    userId,
+                },
+            },
+        },
+        include: {
+            user: true,
+        },
+    });
+
+    await db.$disconnect();
+    return wishes;
 }
 
 const getAllWishes = async (req: NextApiRequest, res: NextApiResponse) => {

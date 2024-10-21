@@ -1,14 +1,22 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import openDb from '../../db/db';
 import {signToken} from "@/utils/jwt";
 import bcrypt from 'bcrypt';
+import openDb from "@/utils/prisma";
 
 async function verifyUser(username: string, password: string) {
 	const db = await openDb();
-	const sql = 'SELECT * FROM users where username = ?';
-	const result = await db.get(sql, [username]);
-	await db.close();
-	return result && await bcrypt.compare(password, result.password) && result || false;
+
+	const user = await db.user.findUnique({
+		where: {
+			username,
+		},
+	});
+
+	if (user && await bcrypt.compare(password, user.password)) {
+		return user;
+	}
+
+	return false;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

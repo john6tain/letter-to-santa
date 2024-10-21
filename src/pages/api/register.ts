@@ -1,26 +1,30 @@
 // src/pages/api/register.ts
 import {NextApiRequest, NextApiResponse} from 'next';
-import openDb from '../../db/db'; // Adjust the import according to your db setup
-// Function to handle the registration logic
-import bcrypt from 'bcrypt';
 
-// Hash the password before saving it
+import bcrypt from 'bcrypt';
+import openDb from "@/utils/prisma";
+
 async function registerUser(username: string, password: string) {
 	const hashedPassword = await bcrypt.hash(password, 10);
 	const db = await openDb();
-	const sql = 'INSERT INTO users (username, password) VALUES (?, ?)';
-	await db.run(sql, [username, hashedPassword]);
-	await db.close();
+	await db.user.create({
+		data: {
+			username,
+			password: hashedPassword,
+		},
+	});
 }
 
 async function checkIfUserExists(username: string) {
 	const db = await openDb();
-	const sql = 'SELECT COUNT(*) AS count FROM users where username = ?';
-	const result = await db.get(sql, [username]); // Use get to fetch a single row
-	await db.close();
-	console.log();
-	return result.count > 0;
+	const user = await db.user.findUnique({
+		where: {
+			username,
+		},
+	});
+	return user !== null;
 }
+
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

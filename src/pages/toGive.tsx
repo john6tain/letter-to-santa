@@ -1,5 +1,5 @@
 import Card from "@/components/card";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import BackendService from "@/services/backendService";
 import {useNotification} from "@/context/NotificationContext";
 
@@ -17,18 +17,20 @@ export default function ToGive() {
 	const [cardData, setCardData] = useState<CardProps[]>([]);
 	const [isReady, setIsReady] = useState(false);
 
-	async function getSelectedWishes() {
+	const getSelectedWishes = useCallback(async () => {
 		BackendService.get<CardProps[]>('/api/wishes/selected')
 			.then((wishes: CardProps[]) => {
 				setCardData(wishes);
 				setIsReady(true);
 			})
 			.catch(error => notify(error.message, 'error'));
-	}
+
+	}, [notify]);
+
 
 	useEffect(() => {
 		getSelectedWishes();
-	});
+	},[getSelectedWishes]);
 
 
 	return (
