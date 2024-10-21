@@ -3,6 +3,27 @@ import {authenticate} from "@/utils/auth";
 import {getUserId} from "@/utils/jwt";
 import openDb from "@/utils/prisma";
 
+interface User {
+    "id": number,
+    "username": string
+    "password": string
+}
+
+interface Wish {
+    id: number;
+    title: string;
+    description: string | null;
+    link: string | null;
+    user: User;
+}
+
+interface SelectedWish {
+    "id": number,
+    "userId": number,
+    "wishId": number,
+    "wish": Wish
+}
+
 async function getSelectedWishes(userId: number) {
     const db = await openDb();
 
@@ -20,7 +41,7 @@ async function getSelectedWishes(userId: number) {
     });
 
     await db.$disconnect(); // Disconnect from the database
-    return selectedWishes.map((selectedWish) => ({
+    return selectedWishes.map((selectedWish: SelectedWish) => ({
         id: selectedWish.wish.id,
         title: selectedWish.wish.title,
         description: selectedWish.wish.description,
