@@ -4,7 +4,7 @@ import path from 'path';
 import fs from 'fs';
 
 // Set the path to your SQLite database file
-const dbPath = path.join(process.cwd(), 'src', 'db', 'santa.db');
+const dbPath = process.env.NODE_ENV === 'production' ? '/tmp/santa.db' : path.join(process.cwd(), 'src', 'db', 'santa.db');
 
 // Create the database file if it doesn't exist
 if (!fs.existsSync(dbPath)) {
