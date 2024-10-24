@@ -39,7 +39,7 @@ export default function MyDinner() {
 				if (!dinners.some(dinner => dinner.enableEdit)) {
 					const card = JSON.parse(JSON.stringify(defaultCard));
 					card.order = (dinners.map(el => el.order).sort().reverse()[0] || 1) + 1;
-					dinners.push();
+					dinners.push(card);
 				}
 				setCardData(dinners.sort((a, b) => a.order - b.order));
 
