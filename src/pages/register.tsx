@@ -33,6 +33,12 @@ export default function Register({clickLogin}: RegisterProps) {
 		}
 	}
 
+	const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key == 'Enter') {
+			register();
+		}
+	}
+
 	return (
 		<div>
 			<label htmlFor="name"
@@ -60,6 +66,7 @@ export default function Register({clickLogin}: RegisterProps) {
 				<input type="password" id="password2"
 				       value={password2}
 				       onChange={(e) => setPassword2(e.target.value)}
+							 onKeyDown={(event) => onKeyDown(event)}
 				       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 				       placeholder="Повтори Парола" required/>
 			</div>

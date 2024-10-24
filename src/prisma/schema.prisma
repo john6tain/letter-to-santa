@@ -15,6 +15,7 @@ model User {
   username        String         @unique
   password        String
   wishes          Wish[]
+  dinners         Dinner[]
   selectedWishes  SelectedWish[]
 }
 
@@ -36,4 +37,14 @@ model SelectedWish {
   user   User   @relation(fields: [userId], references: [id])
   wish   Wish   @relation(fields: [wishId], references: [id])
   @@unique([userId, wishId])
+}
+
+model Dinner {
+  id             Int              @id @default(autoincrement())
+  userId         Int
+  title          String
+  description    String?
+  link           String?
+  user           User              @relation(fields: [userId], references: [id])
+  @@unique([userId, title])
 }

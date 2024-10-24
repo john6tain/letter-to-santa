@@ -2,9 +2,10 @@ import React, {useState} from "react";
 import Login from "@/pages/login";
 import Register from "@/pages/register";
 import {useAuth} from "@/context/AuthContext";
-import MyWishes from "@/pages/myWishes";
+import MyWishes from "@/pages/my-wishes";
 import AllWishes from "@/pages/allWishes";
-import ToGive from "@/pages/toGive";
+import ToGive from "@/pages/to-give";
+import MyDinner from "@/pages/my-dinner";
 
 export default function Index() {
 	const [isLogin, setIsLogin] = useState(false);
@@ -47,6 +48,7 @@ export default function Index() {
 			}
 			{isAuthenticated && (currentMenu === 'wishes' && <MyWishes/>) ||
 				(isAuthenticated && currentMenu === 'select-all' && <AllWishes/>) ||
+				(isAuthenticated && currentMenu === 'dinner' && <MyDinner/>) ||
 				(isAuthenticated && currentMenu === 'toGive' && <ToGive/>) || currentMenu
 			}
 

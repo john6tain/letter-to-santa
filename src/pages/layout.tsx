@@ -1,8 +1,8 @@
 import React from "react";
 import Head from 'next/head';
-import Toaster from "@/components/toaster";
+import Toaster from "@/components/Toaster";
 import {useNotification} from "@/context/NotificationContext";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/Navbar";
 import {useAuth} from "@/context/AuthContext";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({children}) => {

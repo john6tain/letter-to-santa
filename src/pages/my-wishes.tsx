@@ -1,4 +1,4 @@
-import Card from "@/components/card";
+import Card from "@/components/Card";
 import {useCallback, useEffect, useState} from "react";
 import BackendService from "@/services/backendService";
 import {useNotification} from "@/context/NotificationContext";
@@ -60,7 +60,7 @@ export default function MyWishes() {
 
 	function addNewCard() {
 		// defaultCard.id = cardData.length + 1;
-		cardData.push(defaultCard);
+		cardData.push(JSON.parse(JSON.stringify(defaultCard)));
 		setCardData([...cardData]);
 	}
 
