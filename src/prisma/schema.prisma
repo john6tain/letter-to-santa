@@ -11,40 +11,44 @@ datasource db {
 
 // Define your models
 model User {
-  id              Int            @id @default(autoincrement())
-  username        String         @unique
-  password        String
-  wishes          Wish[]
-  dinners         Dinner[]
-  selectedWishes  SelectedWish[]
+  id             Int            @id @default(autoincrement())
+  username       String         @unique
+  password       String
+  wishes         Wish[]
+  dinners        Dinner[]
+  selectedWishes SelectedWish[]
 }
 
 model Wish {
-  id             Int              @id @default(autoincrement())
+  id             Int            @id @default(autoincrement())
   userId         Int
   title          String
   description    String?
   link           String?
-  user           User              @relation(fields: [userId], references: [id])
-  selectedWishes SelectedWish[]    // Add this relation field
+  user           User           @relation(fields: [userId], references: [id])
+  selectedWishes SelectedWish[] // Add this relation field
+
   @@unique([userId, title])
 }
 
 model SelectedWish {
-  id     Int   @id @default(autoincrement())
+  id     Int  @id @default(autoincrement())
   userId Int
   wishId Int
-  user   User   @relation(fields: [userId], references: [id])
-  wish   Wish   @relation(fields: [wishId], references: [id])
+  user   User @relation(fields: [userId], references: [id])
+  wish   Wish @relation(fields: [wishId], references: [id])
+
   @@unique([userId, wishId])
 }
 
 model Dinner {
-  id             Int              @id @default(autoincrement())
-  userId         Int
-  title          String
-  description    String?
-  link           String?
-  user           User              @relation(fields: [userId], references: [id])
+  id          Int     @id @default(autoincrement())
+  userId      Int
+  order       Int?    @default(autoincrement())
+  title       String
+  description String?
+  link        String?
+  user        User    @relation(fields: [userId], references: [id])
+
   @@unique([userId, title])
 }

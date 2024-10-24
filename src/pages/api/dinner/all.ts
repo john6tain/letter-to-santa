@@ -19,6 +19,7 @@ async function getDinners(userId: number) {
 		title: dinners.title,
 		description: dinners.description,
 		link: dinners.link,
+		order: dinners.order,
 		username: dinners.user.username,
 		enableEdit: dinners.user.id === userId,
 	}));

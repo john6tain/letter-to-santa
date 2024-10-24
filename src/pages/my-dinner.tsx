@@ -10,12 +10,14 @@ interface CardProps {
 	description: string;
 	link: string;
 	username?: string;
+	order: number;
 	enableEdit?: boolean;
 }
 
 export default function MyDinner() {
 	const defaultCard: CardProps = useMemo(() => ({
 		id: 0,
+		order: 0,
 		title: 'Напиши име на рецепта',
 		description: 'Пълна рецепта със стъпки',
 		link: '',
@@ -24,6 +26,7 @@ export default function MyDinner() {
 	const {notify} = useNotification();
 	const [cardData, setCardData] = useState<CardProps[]>([]);
 	const [isReady, setIsReady] = useState(false);
+	const [draggedCardId, setDraggedCardId] = useState<number | null>(null);
 	const {setLoading} = useAuth();
 
 	const getDinners = useCallback(async (withoutReady?: boolean) => {
@@ -36,7 +39,8 @@ export default function MyDinner() {
 				if (!dinners.some(dinner => dinner.enableEdit)) {
 					dinners.push(JSON.parse(JSON.stringify(defaultCard)));
 				}
-				setCardData(dinners);
+				setCardData(dinners.sort((a, b) => a.order - b.order));
+
 				setIsReady(true);
 				setLoading(false);
 			})
@@ -96,17 +100,59 @@ export default function MyDinner() {
 
 	}
 
+	async function updateOrder(data: CardProps[]) {
+		setIsReady(false);
+		BackendService.post(`/api/dinner/order`, data)
+			.then(() => {
+				setIsReady(true);
+			})
+			.catch(error => notify(error.message, 'error'));
+	}
+
+	const handleDragStart = (event: React.DragEvent<HTMLElement>, card: CardProps) => {
+		event.dataTransfer.effectAllowed = 'move';
+		setDraggedCardId(card.id);
+	};
+
+	const handleDrop = (event: React.DragEvent<HTMLElement>, targetIndex: number) => {
+		event.preventDefault();
+
+		const draggedCardIndex = cardData.findIndex(card => card.id === draggedCardId);
+		if (draggedCardIndex === -1) return;
+
+		// Move the dragged card to the new position
+		const updatedCards = [...cardData];
+		const [draggedCard] = updatedCards.splice(draggedCardIndex, 1);
+		updatedCards.splice(targetIndex, 0, draggedCard);
+		updatedCards.forEach((el, index) => el.order = index + 1);
+		/*const oldOrder = cardData[draggedCardIndex].order;
+		cardData[draggedCardIndex].order = draggedCardIndex;*/
+
+		updateOrder(cardData);
+		setCardData(updatedCards);
+		setDraggedCardId(null);
+
+		// setTimeout(() => {
+		// 	setIsReady(true);
+		// 	console.log(cardData.map(el => el.order));
+		// }, 50);
+	};
+
 	return (
 		<div className="flex flex-wrap overflow-x-auto">
 			{isReady && cardData.length !== 0 && (cardData.map((card, index) => (
 				<Card key={index} title={card.title} description={card.description} link={card.link}
-							username={!card.enableEdit && card.username || ''}
-							handleChange={(newTitle, newDescription, newLink) => handleChange(index, newTitle, newDescription, newLink)}
-							addNewCard={addNewCard} removeCard={() => removeCard(index)}/>
+				      username={!card.enableEdit && card.username || ''}
+				      handleChange={(newTitle, newDescription, newLink) => handleChange(index, newTitle, newDescription, newLink)}
+				      addNewCard={addNewCard} removeCard={() => removeCard(index)}
+				      onDragStart={(event) => handleDragStart(event, card)}
+				      onDrop={(event) => handleDrop(event, index)}/>
 			))) || isReady && [defaultCard].map((card, index) => (
 				<Card key={index} title={card.title} description={card.description} link={card.link}
-							handleChange={(newTitle, newDescription, newLink) => handleChange(index, newTitle, newDescription, newLink)}
-							addNewCard={addNewCard} removeCard={() => removeCard(index)}/>
+				      handleChange={(newTitle, newDescription, newLink) => handleChange(index, newTitle, newDescription, newLink)}
+				      addNewCard={addNewCard} removeCard={() => removeCard(index)}
+				      onDragStart={(event) => handleDragStart(event, card)}
+				      onDrop={(event) => handleDrop(event, index)}/>
 			))}
 		</div>
 	)

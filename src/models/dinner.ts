@@ -5,5 +5,6 @@ export default interface Dinner {
 	title: string;
 	description: string | null;
 	link: string | null;
+	order: number| null;
 	user: User;
 }

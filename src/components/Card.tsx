@@ -9,6 +9,8 @@ interface CardProps {
 	addNewCard?: () => void;
 	removeCard?: () => void;
 	onClick?: () => void;
+	onDragStart?: (e: React.DragEvent<HTMLElement>) => void;
+	onDrop?: (e: React.DragEvent<HTMLElement>) => void;
 }
 
 export default function Card({
@@ -19,7 +21,9 @@ export default function Card({
 	                             handleChange,
 	                             addNewCard,
 	                             removeCard,
-	                             onClick
+	                             onClick,
+	                             onDragStart,
+	                             onDrop
                              }: CardProps) {
 	const [isEditable, setIsEditable] = useState(false);
 	const [isTitleEditable, setIsTitleEditable] = useState(false);
@@ -50,8 +54,12 @@ export default function Card({
 
 	return (
 		<a href="#"
+		   draggable={!!onDragStart}
 		   className="relative mr-2 ml-2 mt-2 mb-2 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-		   onClick={onClick}>
+		   onClick={onClick}
+		   onDragStart={onDragStart}
+		   onDrop={onDrop}
+		   onDragOver={(e) => e.preventDefault()}>
 			<div className="flex justify-between items-center">
 				<div className="flex-1">
 					{!isTitleEditable && (
