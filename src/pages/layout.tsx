@@ -10,7 +10,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({children}) => {
 	const {toaster, closeToaster} = useNotification();
 	const {isAuthenticated} = useAuth();
 	return (
-		<div className="bg-gradient-to-r from-red-500  to-green-500 h-screen text-white">
+		<div className="bg-gradient-to-r from-red-500 to-green-500 min-h-screen text-white overflow-hidden">
 			<Head>
 				<title>Letter to Santa</title> {/* Set the site title here */}
 				<link rel="icon" href="/favicon.ico"/>
@@ -18,7 +18,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({children}) => {
 				<meta name="description" content="Send letter to Santa"/>
 				{/* Page description */}
 			</Head>
-			<SnowfallComponent />
+			<SnowfallComponent/>
 			{isAuthenticated && <Navbar/>}
 			<Toaster
 				message={toaster.message}

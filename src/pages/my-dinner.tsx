@@ -26,9 +26,11 @@ export default function MyDinner() {
 	const [isReady, setIsReady] = useState(false);
 	const {setLoading} = useAuth();
 
-	const getDinners = useCallback(async () => {
+	const getDinners = useCallback(async (withoutReady?: boolean) => {
 		setLoading(true);
-		setIsReady(false);
+		if (!withoutReady) {
+			setIsReady(false);
+		}
 		BackendService.get<CardProps[]>('/api/dinner/all')
 			.then((dinners: CardProps[]) => {
 				if (!dinners.some(dinner => dinner.enableEdit)) {
@@ -51,7 +53,7 @@ export default function MyDinner() {
 	async function addDinners(data: CardProps) {
 		BackendService.post('/api/dinner/add', data)
 			.then(() => {
-				getDinners();
+				getDinners(true);
 			})
 			.catch(error => notify(error.message, 'error'));
 	}
