@@ -6,6 +6,7 @@ import MyWishes from "@/pages/my-wishes";
 import AllWishes from "@/pages/allWishes";
 import ToGive from "@/pages/to-give";
 import MyDinner from "@/pages/my-dinner";
+import SnowfallComponent from "@/components/SnowfallComponent";
 
 export default function Index() {
 	const [isLogin, setIsLogin] = useState(false);

@@ -4,6 +4,7 @@ import Toaster from "@/components/Toaster";
 import {useNotification} from "@/context/NotificationContext";
 import Navbar from "@/components/Navbar";
 import {useAuth} from "@/context/AuthContext";
+import SnowfallComponent from "@/components/SnowfallComponent";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({children}) => {
 	const {toaster, closeToaster} = useNotification();
@@ -17,6 +18,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({children}) => {
 				<meta name="description" content="Send letter to Santa"/>
 				{/* Page description */}
 			</Head>
+			<SnowfallComponent />
 			{isAuthenticated && <Navbar/>}
 			<Toaster
 				message={toaster.message}
