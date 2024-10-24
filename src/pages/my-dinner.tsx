@@ -42,7 +42,7 @@ export default function MyDinner() {
 				notify(error.message, 'error')
 			});
 
-	}, [setLoading, notify]);
+	}, [setLoading, notify, defaultCard]);
 
 	useEffect(() => {
 		getDinners();
@@ -97,7 +97,8 @@ export default function MyDinner() {
 	return (
 		<div className="flex flex-wrap overflow-x-auto">
 			{isReady && cardData.length !== 0 && (cardData.map((card, index) => (
-				<Card key={index} title={card.title} description={card.description} link={card.link} username={!card.enableEdit && card.username || ''}
+				<Card key={index} title={card.title} description={card.description} link={card.link}
+							username={!card.enableEdit && card.username || ''}
 							handleChange={(newTitle, newDescription, newLink) => handleChange(index, newTitle, newDescription, newLink)}
 							addNewCard={addNewCard} removeCard={() => removeCard(index)}/>
 			))) || isReady && [defaultCard].map((card, index) => (

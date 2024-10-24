@@ -2,7 +2,6 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import {authenticate} from "@/utils/auth";
 import {getUserId} from "@/utils/jwt";
 import openDb from "@/utils/prisma";
-import Wish from "@/models/wish";
 import Dinner from "@/models/dinner";
 
 async function getDinners(userId: number) {
