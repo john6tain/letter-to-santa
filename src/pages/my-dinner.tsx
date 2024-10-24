@@ -37,7 +37,9 @@ export default function MyDinner() {
 		BackendService.get<CardProps[]>('/api/dinner/all')
 			.then((dinners: CardProps[]) => {
 				if (!dinners.some(dinner => dinner.enableEdit)) {
-					dinners.push(JSON.parse(JSON.stringify(defaultCard)));
+					const card = JSON.parse(JSON.stringify(defaultCard));
+					card.order = (dinners.map(el => el.order).sort().reverse()[0] || 1) + 1;
+					dinners.push();
 				}
 				setCardData(dinners.sort((a, b) => a.order - b.order));
 
