@@ -24,7 +24,7 @@ export default function Navbar() {
 					</Link>
 				</div>
 				<div className="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-					<a href="https://www.noradsanta.org/"> <Image src="/sleigh.png" className="sleigh" alt="sleigh"
+					<a href="https://www.noradsanta.org/" target="_blank"> <Image src="/sleigh.png" className="sleigh" alt="sleigh"
 					                                              width="100" height="100"/></a>
 
 					<a href="#"

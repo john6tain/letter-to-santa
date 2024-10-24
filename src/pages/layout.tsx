@@ -24,8 +24,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({children}) => {
 				visible={toaster.visible}
 				onClose={closeToaster}
 			/>
-
-			<div className="animate-feather-flutter">
+			<div>
 				{children}
 			</div>
 

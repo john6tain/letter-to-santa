@@ -70,9 +70,9 @@ body {
     }
 }
 
-/*.animate-feather-flutter {*/
-/*    animation: feather-flutter 10s ease forwards; !* Increased duration for slower effect *!*/
-/*}*/
+.animate-feather-flutter {
+    animation: feather-flutter 10s ease forwards; /* Increased duration for slower effect */
+}
 
 .sleigh {
     border-radius: 25%;
