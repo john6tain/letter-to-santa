@@ -1,5 +1,5 @@
 import Card from "@/components/Card";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import BackendService from "@/services/backendService";
 import {useNotification} from "@/context/NotificationContext";
 import {useAuth} from "@/context/AuthContext";
@@ -14,12 +14,12 @@ interface CardProps {
 }
 
 export default function MyDinner() {
-	const defaultCard: CardProps = {
+	const defaultCard: CardProps = useMemo(() => ({
 		id: 0,
 		title: 'Напиши име на рецепта',
 		description: 'Пълна рецепта със стъпки',
 		link: '',
-	};
+	}), []);
 
 	const {notify} = useNotification();
 	const [cardData, setCardData] = useState<CardProps[]>([]);
