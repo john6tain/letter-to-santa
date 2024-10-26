@@ -33,6 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 
 	const logout = () => {
 		AuthService.logout();
+		setCurrentMenu('wishes');
 		setIsAuthenticated(false); // Update the state to reflect logout
 	};
 

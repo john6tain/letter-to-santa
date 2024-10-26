@@ -13,7 +13,7 @@ interface CardProps {
 
 export default function MyWishes() {
 	const defaultCard: CardProps = {
-		id: 0,
+		id: -1,
 		title: 'Напиши име на подаръка',
 		description: 'Дай малко подробности за подаръка',
 		link: ''
@@ -91,11 +91,11 @@ export default function MyWishes() {
 	return (
 		<div className="flex flex-wrap overflow-x-auto">
 			{isReady && cardData.length !== 0 && (cardData.map((card, index) => (
-				<Card key={index} title={card.title} description={card.description} link={card.link}
+				<Card key={index} title={card.title} description={card.description} link={card.link} id={card.id}
 				      handleChange={(newTitle, newDescription, newLink) => handleChange(index, newTitle, newDescription, newLink)}
 				      addNewCard={addNewCard} removeCard={() => removeCard(index)}/>
 			))) || isReady && [defaultCard].map((card, index) => (
-				<Card key={index} title={card.title} description={card.description} link={card.link}
+				<Card key={index} title={card.title} description={card.description} link={card.link} id={card.id}
 				      handleChange={(newTitle, newDescription, newLink) => handleChange(index, newTitle, newDescription, newLink)}
 				      addNewCard={addNewCard} removeCard={() => removeCard(index)}/>
 			))}

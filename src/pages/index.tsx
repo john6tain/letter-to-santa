@@ -6,6 +6,7 @@ import MyWishes from "@/pages/my-wishes";
 import AllWishes from "@/pages/allWishes";
 import ToGive from "@/pages/to-give";
 import MyDinner from "@/pages/my-dinner";
+import Admin from "@/pages/admin";
 
 export default function Index() {
 	const [isLogin, setIsLogin] = useState(false);
@@ -28,7 +29,7 @@ export default function Index() {
 			{!isAuthenticated && <div
                 className="animate-feather-flutter grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
                 <main className="flex flex-col gap-8 row-start-2 items-center">
-					{!isLogin && !isRegister && <h2>Дядо Kоледа е вече на години и не помни имена затова</h2>}
+					{!isLogin && !isRegister && <h2>Дядо Kоледа е вече на години и не помни имена, затова</h2>}
 					{isLogin && !isRegister && (<Login clickRegister={clickRegister}/>)}
 					{isRegister && !isLogin && (<Register clickLogin={clickLogin}/>)}
 					{!isLogin && !isRegister &&

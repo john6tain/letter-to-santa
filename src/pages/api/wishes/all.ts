@@ -15,9 +15,7 @@ async function getWishes(userId: number) {
 				},
 			},
 			selectedWishes: {
-				none: {
-					userId,
-				},
+				none: {},
 			},
 		},
 		include: {

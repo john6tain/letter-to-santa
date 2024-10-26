@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 
 interface CardProps {
+	id?: number;
 	title: string;
 	description: string;
 	link: string;
@@ -9,22 +10,25 @@ interface CardProps {
 	addNewCard?: () => void;
 	removeCard?: () => void;
 	onClick?: () => void;
+	onDoubleClick?: () => void;
 	onDragStart?: (e: React.DragEvent<HTMLElement>) => void;
 	onDrop?: (e: React.DragEvent<HTMLElement>) => void;
 }
 
 export default function Card({
-	                             title,
-	                             description,
-	                             link,
-	                             username,
-	                             handleChange,
-	                             addNewCard,
-	                             removeCard,
-	                             onClick,
-	                             onDragStart,
-	                             onDrop
-                             }: CardProps) {
+															 id,
+															 title,
+															 description,
+															 link,
+															 username,
+															 handleChange,
+															 addNewCard,
+															 removeCard,
+															 onClick,
+															 onDoubleClick,
+															 onDragStart,
+															 onDrop
+														 }: CardProps) {
 	const [isEditable, setIsEditable] = useState(false);
 	const [isTitleEditable, setIsTitleEditable] = useState(false);
 	const [isLinkEditable, setIsLinkEditable] = useState(false);
@@ -52,19 +56,45 @@ export default function Card({
 		};
 	}, [handleChange, newTitle, newDescription, newLink]);
 
+	function handleLinkClick(event: React.MouseEvent<HTMLDivElement>) {
+		event.preventDefault();
+		event.stopPropagation();
+		if (!username) {
+			setIsLinkEditable(true);
+		} else {
+			window.open(newLink, "_blank")
+		}
+
+	}
+
+	function clickTitle(){
+		if (!username && id === -1) {
+			setNewTitle(id !== -1 && newTitle || '');
+			setIsTitleEditable(true);
+		}
+	}
+
+	function clickTDescription(){
+		if (!username) {
+			setNewDescription(id !== -1 && newDescription || '');
+			setIsEditable(true);
+		}
+	}
+
 	return (
 		<a href="#"
-		   draggable={!!onDragStart}
-		   className="relative mr-2 ml-2 mt-2 mb-2 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-		   onClick={onClick}
-		   onDragStart={onDragStart}
-		   onDrop={onDrop}
-		   onDragOver={(e) => e.preventDefault()}>
+			 draggable={!!onDragStart}
+			 className="relative mr-2 ml-2 mt-2 mb-2 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+			 onClick={onClick}
+			 onDoubleClick={onDoubleClick}
+			 onDragStart={onDragStart}
+			 onDrop={onDrop}
+			 onDragOver={(e) => e.preventDefault()}>
 			<div className="flex justify-between items-center">
 				<div className="flex-1">
 					{!isTitleEditable && (
 						<h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-						    onClick={() => !username && setIsTitleEditable(true)}>
+								onClick={clickTitle}>
 							{newTitle}
 						</h5>
 					)}
@@ -73,7 +103,7 @@ export default function Card({
 							id="title"
 							rows={1}
 							className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-							placeholder="Write your thoughts here..."
+							placeholder={title}
 							ref={textAreaRef}
 							value={newTitle}
 							onChange={(e) => !username && setNewTitle(e.target.value)}
@@ -81,7 +111,7 @@ export default function Card({
 					)}
 					{!isEditable && (
 						<div className="font-normal text-gray-700 dark:text-gray-400 mt-2"
-						     onClick={() => !username && setIsEditable(true)}>
+								 onClick={clickTDescription}>
 							{newDescription}
 						</div>
 					)}
@@ -90,7 +120,7 @@ export default function Card({
 							id="description"
 							rows={4}
 							className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-							placeholder="Write your thoughts here..."
+							placeholder={newDescription}
 							ref={textAreaRef}
 							value={newDescription}
 							onChange={(e) => !username && setNewDescription(e.target.value)}
@@ -98,8 +128,7 @@ export default function Card({
 					)}
 					{!isEditable && (
 						<div className="font-medium text-blue-600 dark:text-blue-500 hover:underline mt-2"
-						     onClick={() => !username && setIsLinkEditable(true)}
-						     onDoubleClick={() => window.open(newLink, "_blank")}>
+								 onClick={(event) => handleLinkClick(event)}>
 							Линкче
 						</div>
 					)}
@@ -108,7 +137,7 @@ export default function Card({
 							id="link"
 							rows={4}
 							className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-							placeholder="Write your thoughts here..."
+							placeholder="Дай Линкче"
 							ref={textAreaRef}
 							value={newLink}
 							onChange={(e) => !username && setLink(e.target.value)}
@@ -119,7 +148,7 @@ export default function Card({
 				{!username && (
 					<div>
 						<svg className="h-8 w-8 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-						     onClick={addNewCard}>
+								 onClick={addNewCard}>
 							<circle cx="12" cy="12" r="10"/>
 							<line x1="12" y1="8" x2="12" y2="16"/>
 							<line x1="8" y1="12" x2="16" y2="12"/>

@@ -35,9 +35,11 @@ export default function AllWishes() {
 	}, [getWishes]);
 
 	function selectToGive(card: CardProps) {
+		setIsReady(false);
 		BackendService.post('/api/wishes/select', {title: card.title, wishId: card.id})
 			.then(() => {
-				notify(`Ти избра да подариш\n ${card.title}\n на ${card.username}`, 'success')
+				notify(`Ти избра да подариш\n ${card.title}\n на ${card.username}`, 'success');
+				getWishes();
 			})
 			.catch(error => notify(error.message, 'error'));
 	}
@@ -46,7 +48,7 @@ export default function AllWishes() {
 		<div className="flex flex-wrap overflow-x-auto">
 			{isReady && cardData.map((card, index) => (
 				<Card key={index} title={card.title} description={card.description} link={card.link}
-				      username={card.username} onClick={() => selectToGive(card)}/>
+				      username={card.username} onDoubleClick={() => selectToGive(card)}/>
 			))}
 		</div>
 	)

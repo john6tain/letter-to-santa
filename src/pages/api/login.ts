@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			const user = await verifyUser(username, password)
 			if (user) {
 				const token = signToken({userId: user.id});
-				res.status(200).json({message: 'Влизането беще успешно!', token, username});
+				res.status(200).json({message: 'Влизането беше успешно!', token, username});
 			} else {
 				res.status(403).json({message: 'Името или Паролата са невалидни'});
 			}

@@ -37,6 +37,7 @@ export default function ToGive() {
 
 	function removeSelected(card: CardProps) {
 		if (confirm("Сигурен ли си, че искаш да премахнеш това желание")) {
+			setIsReady(false);
 			BackendService.post('/api/wishes/unselect', {title: card.title, wishId: card.id})
 				.then(() => {
 					notify(`Ти премахна желанието\n ${card.title}\n на ${card.username}`, 'success')
@@ -49,7 +50,7 @@ export default function ToGive() {
 		<div className="flex flex-wrap overflow-x-auto">
 			{isReady && cardData.map((card, index) => (
 				<Card key={index} title={card.title} description={card.description} link={card.link}
-				      username={card.username} onClick={() => removeSelected(card)}/>
+				      username={card.username} onDoubleClick={() => removeSelected(card)}/>
 			))}
 		</div>
 	)

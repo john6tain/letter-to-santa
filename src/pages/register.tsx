@@ -13,7 +13,10 @@ export default function Register({clickLogin}: RegisterProps) {
 
 	async function register() {
 		if (password !== password2) {
-			return alert('Passwords do not match');
+			return 	notify('Паролите не съвпадат', 'error');
+		}
+		if (!username || !password) {
+			return notify('Името и паролата са задължитенлни', 'error');
 		}
 		const response = await fetch('/api/register', {
 			method: 'POST',
@@ -50,7 +53,7 @@ export default function Register({clickLogin}: RegisterProps) {
 			       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 			       placeholder="Име" required/>
 			<div><label htmlFor="password"
-			            className="block mb-2 text-sm font-medium text-white-900 dark:text-white">
+			            className="block mt-2 mb-2 text-sm font-medium text-white-900 dark:text-white">
 				Парола</label>
 				<input type="password" id="password"
 				       value={password}
@@ -61,7 +64,7 @@ export default function Register({clickLogin}: RegisterProps) {
 
 			<div>
 				<label htmlFor="password2"
-				       className="block mb-2 text-sm font-medium  text-white-900 dark:text-white">
+				       className="block mt-2 mb-2 text-sm font-medium  text-white-900 dark:text-white">
 					Повтори Парола</label>
 				<input type="password" id="password2"
 				       value={password2}

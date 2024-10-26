@@ -28,7 +28,7 @@ async function addWish(userId: number, title: string, description: string, link:
 	});
 
 	await db.$disconnect(); // Disconnect from the database
-	console.log(result); // Log the result for debugging
+	// console.log(result); // Log the result for debugging
 	return result; // Return the result of the operation
 }
 
