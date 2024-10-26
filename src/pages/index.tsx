@@ -12,6 +12,7 @@ export default function Index() {
 	const [isLogin, setIsLogin] = useState(false);
 	const [isRegister, setIsRegister] = useState(false);
 	const {isAuthenticated, currentMenu} = useAuth();
+	const [isAdmin] = useState(false);
 
 	function clickRegister() {
 		setIsRegister(true);
@@ -51,6 +52,9 @@ export default function Index() {
 				(isAuthenticated && currentMenu === 'select-all' && <AllWishes/>) ||
 				(isAuthenticated && currentMenu === 'dinner' && <MyDinner/>) ||
 				(isAuthenticated && currentMenu === 'toGive' && <ToGive/>) || currentMenu
+			}
+			{isAdmin &&
+				(<Admin></Admin>)
 			}
 
 		</div>

@@ -7,4 +7,5 @@ export default interface Dinner {
 	link: string | null;
 	order: number| null;
 	user: User;
+	enableEdit?: boolean;
 }
