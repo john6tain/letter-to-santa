@@ -6,6 +6,7 @@ async function orderDinner(dinners: { id: number; order: number }[]) {
 	const db = await openDb();
 
 	const updatePromises = dinners.map(dinner => {
+
 		return db.dinner.update({
 			where: {
 				id: dinner.id, // Update by card ID

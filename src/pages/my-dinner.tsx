@@ -16,7 +16,7 @@ interface CardProps {
 
 export default function MyDinner() {
 	const defaultCard: CardProps = useMemo(() => ({
-		id: 0,
+		id: -1,
 		order: 0,
 		title: 'Напиши име на рецепта',
 		description: 'Пълна рецепта със стъпки',
@@ -104,7 +104,7 @@ export default function MyDinner() {
 
 	async function updateOrder(data: CardProps[]) {
 		setIsReady(false);
-		BackendService.post(`/api/dinner/order`, data)
+		BackendService.post(`/api/dinner/order`, data.filter(el => el.id !== -1))
 			.then(() => {
 				setIsReady(true);
 			})
@@ -144,17 +144,17 @@ export default function MyDinner() {
 		<div className="flex flex-wrap overflow-x-auto">
 			{isReady && cardData.length !== 0 && (cardData.map((card, index) => (
 				<Card key={index} title={card.title} description={card.description} link={card.link}
-				      username={!card.enableEdit && card.username || ''}
-				      handleChange={(newTitle, newDescription, newLink) => handleChange(index, newTitle, newDescription, newLink)}
-				      addNewCard={addNewCard} removeCard={() => removeCard(index)}
-				      onDragStart={(event) => handleDragStart(event, card)}
-				      onDrop={(event) => handleDrop(event, index)}/>
+							username={!card.enableEdit && card.username || ''} id={card.id}
+							handleChange={(newTitle, newDescription, newLink) => handleChange(index, newTitle, newDescription, newLink)}
+							addNewCard={addNewCard} removeCard={() => removeCard(index)}
+							onDragStart={(event) => handleDragStart(event, card)}
+							onDrop={(event) => handleDrop(event, index)}/>
 			))) || isReady && [defaultCard].map((card, index) => (
-				<Card key={index} title={card.title} description={card.description} link={card.link}
-				      handleChange={(newTitle, newDescription, newLink) => handleChange(index, newTitle, newDescription, newLink)}
-				      addNewCard={addNewCard} removeCard={() => removeCard(index)}
-				      onDragStart={(event) => handleDragStart(event, card)}
-				      onDrop={(event) => handleDrop(event, index)}/>
+				<Card key={index} title={card.title} description={card.description} link={card.link} id={card.id}
+							handleChange={(newTitle, newDescription, newLink) => handleChange(index, newTitle, newDescription, newLink)}
+							addNewCard={addNewCard} removeCard={() => removeCard(index)}
+							onDragStart={(event) => handleDragStart(event, card)}
+							onDrop={(event) => handleDrop(event, index)}/>
 			))}
 		</div>
 	)
