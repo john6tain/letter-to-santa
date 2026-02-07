@@ -10,7 +10,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({children}) => {
 	const {toaster, closeToaster} = useNotification();
 	const {isAuthenticated} = useAuth();
 	return (
-		<div className="bg-gradient-to-r from-red-500 to-green-500 min-h-screen text-white overflow-hidden">
+		<div className="bg-[linear-gradient(to_right,#f05252_0%,#f05252_20%,#0e9f6e_80%,#0e9f6e_100%)] min-h-screen text-white overflow-hidden">
 			<Head>
 				<title>Letter to Santa</title> {/* Set the site title here */}
 				<link rel="icon" href="/favicon.ico"/>
