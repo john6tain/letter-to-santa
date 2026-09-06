@@ -3,7 +3,7 @@ import { defineConfig } from "prisma/config";
 
 export default defineConfig({
   schema: path.join("src", "prisma", "schema.prisma"),
-  migrate: {
+  datasource: {
     url: process.env.POSTGRES_PRISMA_URL,
   },
 });
